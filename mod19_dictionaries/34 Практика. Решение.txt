@@ -1,0 +1,139 @@
+# Задача 1. Член семьи
+#
+# Дана структура, которая содержит описание одного из членов семьи (имя, фамилия, хобби, сколько лет и дети):
+#
+#
+#
+# family_member = {
+#
+#     "name": "Jane",
+#
+#     "surname": "Doe",
+#
+#     "hobbies": ["running", "sky diving", "singing"],
+#
+#     "age": 35,
+#
+#     "children": [
+#
+#         {
+#
+#             "name": "Alice",
+#
+#             "age": 6
+#
+#         },
+#
+#         {
+#
+#             "name": "Bob",
+#
+#             "age": 8
+#
+#         }
+#
+#     ]
+#
+# }
+#
+#
+#
+# Напишите программу, которая реализует такую структуру: имя, фамилия, хобби, кол-во лет и дети. Затем,
+# с помощью метода get и установки значения по умолчанию, проверьте есть ли ребёнок с именем Bob.
+# Затем в отдельную переменную получите фамилию этого ребёнка и выведите её на экран.
+# Если у него нет фамилии, то получите значение ‘Nosurname’.
+#
+#
+family_member = {
+    "name": "Jane",
+    "surname": "Doe",
+    "hobbies": ["running", "sky diving", "singing"],
+    "age": 35,
+    "children": [
+        {
+            "name": "Alice",
+            "age": 6
+        },
+        {
+            "name": "Bob",
+            "age": 8
+        }
+    ]
+}
+
+childrens_dict = {}
+for child in family_member["children"]:
+    childrens_dict[child["name"]] = child["age"]
+
+search_bob = childrens_dict.get("Bob", None)
+if search_bob:
+    print("Bob найден")
+else:
+    print("Bob-а нету!")
+
+childrens_surname = family_member.get("surname", None)
+if childrens_surname:
+    print(childrens_surname)
+else:
+    print("Nosurname")
+
+# Задача 2. Игроки
+#
+# Есть готовый словарь игроков, у каждого игрока есть имя, команда, в которой он играет, а также его текущий статус,
+# в котором указано, отдыхает он, тренируется или путешествует:
+#
+#
+#
+# players_dict = {
+#
+#     1: {'name': 'Vanya', 'team': 'A', 'status': 'Rest'},
+#
+#     2: {'name': 'Lena', 'team': 'B', 'status': 'Training'},
+#
+#     3: {'name': 'Maxim', 'team': 'C', 'status': 'Travel'},
+#
+#     4: {'name': 'Egor', 'team': 'C', 'status': 'Rest'},
+#
+#     5: {'name': 'Andrei', 'team': 'A', 'status': 'Training'},
+#
+#     6: {'name': 'Sasha', 'team': 'A', 'status': 'Rest'},
+#
+#     7: {'name': 'Alina', 'team': 'B', 'status': 'Rest'},
+#
+#     8: {'name': 'Masha', 'team': 'C', 'status': 'Travel'}
+#
+# }
+#
+#
+#
+# Напишите программу, которая выводит на экран вот такие данные в разных строчках:
+#
+# Все члены команды из команды А, которые отдыхают.
+# Все члены команды из группы B, которые тренируются.
+# Все члены команды из команды C, которые путешествуют.
+
+players_dict = {
+    1: {'name': 'Vanya', 'team': 'A', 'status': 'Rest'},
+    2: {'name': 'Lena', 'team': 'B', 'status': 'Training'},
+    3: {'name': 'Maxim', 'team': 'C', 'status': 'Travel'},
+    4: {'name': 'Egor', 'team': 'C', 'status': 'Rest'},
+    5: {'name': 'Andrei', 'team': 'A', 'status': 'Training'},
+    6: {'name': 'Sasha', 'team': 'A', 'status': 'Rest'},
+    7: {'name': 'Alina', 'team': 'B', 'status': 'Rest'},
+    8: {'name': 'Masha', 'team': 'C', 'status': 'Travel'}
+}
+
+# Чтобы не прописывать решение "в лоб", вручную подставляя статус и команду - попробуем сформировать дополнительные словарь и список,
+# чтобы автоматизировать этот процесс:
+help_dict = {"Rest": "отдыхают",
+             "Training": "тренируются",
+             "Travel": "путешествуют"}
+
+team_order = ["A", "B", "C"]
+
+# Запустим цикл по словарю состояний и одновременно будем вести счёт состояний, чтобы на каждой итерации выбирать одну из команд:
+for index, state in enumerate(help_dict):
+    print(f"Все члены команды из команды {team_order[index]}, которые {help_dict[state]}:")
+    for _, player in players_dict.items():
+        if player["status"] == state and player["team"] == team_order[index]:
+            print(player["name"])
